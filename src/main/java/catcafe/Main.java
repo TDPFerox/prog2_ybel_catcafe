@@ -1,7 +1,5 @@
 package catcafe;
 
-import java.util.Optional;
-
 /** Starter for the cat-café task. */
 public class Main {
     /**
