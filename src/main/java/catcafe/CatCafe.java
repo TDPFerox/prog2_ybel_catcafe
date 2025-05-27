@@ -2,6 +2,7 @@ package catcafe;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Optional;
 import tree.Empty;
 import tree.Tree;
 import tree.TreeVisitor;
@@ -29,37 +30,33 @@ public class CatCafe {
     }
 
     /**
-     * Pick up the first cat in the café with a given name.
+     * Find the first cat in the café with a given name.
      *
      * @param name name of the cat
-     * @return cat with the given name
+     * @return an Optional containing the cat with the given name, or empty if none found
      */
-    public FelineOverLord getCatByName(String name) {
-        if (name == null) return null;
+    public Optional<FelineOverLord> getCatByName(String name) {
+        if (name == null) return Optional.empty();
 
-        for (FelineOverLord c : clowder) {
-            if (c.name().equals(name)) return c;
-        }
-
-        return null;
+        return clowder.stream()
+                .filter(cat -> cat.name().equals(name))
+                .findFirst();
     }
 
     /**
-     * Pick up the first cat in the café with a weight within the specified limits.
+     * Find the first cat in the café with a weight within the specified limits.
      *
      * @param minWeight lower weight limit (inclusive)
      * @param maxWeight upper weight limit (exclusive)
-     * @return cat within the weight limits
+     * @return an Optional containing the cat within the weight limits, or empty if none found
      */
-    public FelineOverLord getCatByWeight(int minWeight, int maxWeight) {
-        if (minWeight < 0) return null;
-        if (maxWeight < minWeight) return null;
+    public Optional<FelineOverLord> getCatByWeight(int minWeight, int maxWeight) {
+        if (minWeight < 0) return Optional.empty();
+        if (maxWeight < minWeight) return Optional.empty();
 
-        for (FelineOverLord c : clowder) {
-            if (c.weight() >= minWeight && c.weight() < maxWeight) return c;
-        }
-
-        return null;
+        return clowder.stream()
+                .filter(cat -> cat.weight() >= minWeight && cat.weight() < maxWeight)
+                .findFirst();
     }
 
     /**
